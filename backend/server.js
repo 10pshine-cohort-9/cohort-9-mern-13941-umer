@@ -27,7 +27,7 @@ app.get('/api/test-error', (req, res, next) => {
 });
 
 // Handle undefined routes
-app.use('*', (req, res) => {
+app.use((req, res) => {
     res.status(404).json({ success: false, message: 'API route is not found' });
 });
 
@@ -35,6 +35,10 @@ app.use('*', (req, res) => {
 app.use(errorHandler);
 
 // Start Server
-app.listen(port, () => {
+app.listen(port, (err) => {
+    if (err) {
+        logger.error(`Error starting server: ${err.message}`);
+        process.exit(1); // Stop the server if there's an error
+    }
     logger.info(`Server is up and running on port ${port}`);
 });
