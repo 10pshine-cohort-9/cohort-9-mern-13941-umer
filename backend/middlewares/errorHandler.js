@@ -1,5 +1,4 @@
-// require logger
-const logger = require('../utils/logger');
+const logger = require('pino')();
 
 // global error middleware
 const errorHandler = (err, req, res, next) => {
