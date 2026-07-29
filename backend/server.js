@@ -7,6 +7,10 @@ const app = express();
 const port = process.env.PORT || 5000;
 const logger = pino();
 
+const initDatabase = require('./config/initDb');
+
+const dbRoutes = require('./routes/dbRoutes');
+
 // Middleware to parse JSON
 app.use(express.json());
 
@@ -33,6 +37,12 @@ app.use((req, res) => {
 
 // Global Exception Handling Middleware
 app.use(errorHandler);
+
+// use db routes
+app.use('/api/db', dbRoutes);
+
+// run table queries
+initDatabase();
 
 // Start Server
 app.listen(port, (err) => {
