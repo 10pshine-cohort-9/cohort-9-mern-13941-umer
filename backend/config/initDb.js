@@ -32,6 +32,7 @@ const initDatabase = async () => {
     } catch (err) {
         // log error message
         logger.error('db error', err.message);
+        throw err;
     }
 };
 

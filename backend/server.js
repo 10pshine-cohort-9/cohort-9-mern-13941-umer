@@ -8,18 +8,15 @@ const port = process.env.PORT || 5000;
 const logger = pino();
 
 const initDatabase = require('./config/initDb');
-
 const dbRoutes = require('./routes/dbRoutes');
 
 // Middleware to parse JSON
 app.use(express.json());
 
-
 // use db routes
 app.use('/api/db', dbRoutes);
 
-
-// Basic Route
+// Basic Routing
 app.get('/api/status', (req, res) => {
     logger.info('Status check route accessed');
     res.status(200).json({
@@ -35,24 +32,35 @@ app.get('/api/test-error', (req, res, next) => {
     next(error); // This will be caught by the global error handler
 });
 
-// Handle undefined routes
+
 app.use((req, res) => {
     res.status(404).json({ success: false, message: 'API route is not found' });
 });
 
-
-
-// run table queries
-initDatabase();
-
-// Start Server
-app.listen(port, (err) => {
-    if (err) {
-        logger.error(`Error starting server: ${err.message}`);
-        process.exit(1); // Stop the server if there's an error
-    }
-    logger.info(`Server is up and running on port ${port}`);
-});
-
 // Global Exception Handling Middleware
 app.use(errorHandler);
+
+
+
+
+const startServer = async () => {
+    try {
+       
+        await initDatabase(); 
+
+        // Start Server
+        app.listen(port, (err) => {
+            if (err) {
+                logger.error(`Error starting server: ${err.message}`);
+                process.exit(1); // Stop the server if there's an error
+            }
+            logger.info(`Server is up and running on port ${port}`);
+        });
+    } catch (err) {
+        
+        logger.error(`Failed to start server due to database error: ${err.message}`);
+        process.exit(1); 
+    }
+};
+
+startServer();

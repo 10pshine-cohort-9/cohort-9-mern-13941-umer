@@ -7,7 +7,7 @@ const checkDbStatus = async (req, res) => {
     res.status(200).json({ status: 'db is connected' });
     } catch (err) {
 
-        res.status(500).json({ status: 'db connection failed', error: err.message });
+        res.status(500).json({ status: 'db connection failed', error: 'Internal Server Error' });
     }
 };
 
