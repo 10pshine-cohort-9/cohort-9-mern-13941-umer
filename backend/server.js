@@ -14,6 +14,11 @@ const dbRoutes = require('./routes/dbRoutes');
 // Middleware to parse JSON
 app.use(express.json());
 
+
+// use db routes
+app.use('/api/db', dbRoutes);
+
+
 // Basic Route
 app.get('/api/status', (req, res) => {
     logger.info('Status check route accessed');
@@ -35,11 +40,7 @@ app.use((req, res) => {
     res.status(404).json({ success: false, message: 'API route is not found' });
 });
 
-// Global Exception Handling Middleware
-app.use(errorHandler);
 
-// use db routes
-app.use('/api/db', dbRoutes);
 
 // run table queries
 initDatabase();
@@ -52,3 +53,6 @@ app.listen(port, (err) => {
     }
     logger.info(`Server is up and running on port ${port}`);
 });
+
+// Global Exception Handling Middleware
+app.use(errorHandler);
