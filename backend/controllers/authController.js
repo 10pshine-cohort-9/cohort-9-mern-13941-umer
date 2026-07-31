@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const logger = require('pino')();
 
 const {
-    createUser, findUserByEmail} = require('../models/userModel');
+    createUser, findUserByEmail } = require('../models/userModel');
 
 
 // -----------Signup Controller-------------
@@ -13,11 +13,19 @@ const signup = async (req, res, next) => {
 
         const { name, email, password } = req.body;
 
-        
+
         if (!name || !email || !password) {
             return res.status(400).json({
                 message: 'All fields are required'
             });
+        }
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            return res.status(400).json({ message: 'Invalid email format' });
+        }
+        if (password.length < 6) {
+            return res.status(400).json({ message: 'Password must be at least 6 characters long' });
         }
 
         const existingUser = await findUserByEmail(email);
@@ -33,7 +41,7 @@ const signup = async (req, res, next) => {
 
         await createUser(name, email, hashedPassword);
 
-        logger.info(`New user registered: ${email}`);
+        logger.info('New user registered successfully');
 
         return res.status(201).json({
             success: true,
@@ -90,7 +98,7 @@ const login = async (req, res, next) => {
             }
         );
 
-        logger.info(`User logged in: ${email}`);
+        logger.info({ userId: user.id }, 'User logged in');
 
         return res.status(200).json({
             success: true,
@@ -104,4 +112,4 @@ const login = async (req, res, next) => {
 };
 
 
-module.exports = { signup,login};
+module.exports = { signup, login };
