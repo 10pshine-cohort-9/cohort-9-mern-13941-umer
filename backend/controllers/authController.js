@@ -1,0 +1,107 @@
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const logger = require('pino')();
+
+const {
+    createUser, findUserByEmail} = require('../models/userModel');
+
+
+// -----------Signup Controller-------------
+
+const signup = async (req, res, next) => {
+    try {
+
+        const { name, email, password } = req.body;
+
+        
+        if (!name || !email || !password) {
+            return res.status(400).json({
+                message: 'All fields are required'
+            });
+        }
+
+        const existingUser = await findUserByEmail(email);
+
+        if (existingUser) {
+            return res.status(400).json({
+                message: 'Email already registered'
+            });
+        }
+
+        // Encrypt password
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        await createUser(name, email, hashedPassword);
+
+        logger.info(`New user registered: ${email}`);
+
+        return res.status(201).json({
+            success: true,
+            message: 'User registered successfully'
+        });
+
+    } catch (err) {
+        next(err);
+    }
+};
+
+
+// ------------Login Controller---------------
+
+const login = async (req, res, next) => {
+
+    try {
+
+        const { email, password } = req.body;
+
+        // Validation
+        if (!email || !password) {
+            return res.status(400).json({
+                message: 'Email and password are required'
+            });
+        }
+
+        // Finding user
+        const user = await findUserByEmail(email);
+
+        if (!user) {
+            return res.status(401).json({
+                message: 'Invalid credentials'
+            });
+        }
+
+        const isMatch = await bcrypt.compare(password, user.password);
+
+        if (!isMatch) {
+            return res.status(401).json({
+                message: 'Invalid credentials'
+            });
+        }
+
+        // Generate JWT token
+        const token = jwt.sign(
+            {
+                id: user.id,
+                email: user.email
+            },
+            process.env.JWT_SECRET,
+            {
+                expiresIn: '1d'
+            }
+        );
+
+        logger.info(`User logged in: ${email}`);
+
+        return res.status(200).json({
+            success: true,
+            message: 'Login successful',
+            token
+        });
+
+    } catch (err) {
+        next(err);
+    }
+};
+
+
+module.exports = { signup,login};

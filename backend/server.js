@@ -9,12 +9,15 @@ const logger = pino();
 
 const initDatabase = require('./config/initDb');
 const dbRoutes = require('./routes/dbRoutes');
+const authRoutes = require('./routes/authRoutes');
+
 
 // Middleware to parse JSON
 app.use(express.json());
 
 // use db routes
 app.use('/api/db', dbRoutes);
+app.use('/api/auth', authRoutes);
 
 // Basic Routing
 app.get('/api/status', (req, res) => {
