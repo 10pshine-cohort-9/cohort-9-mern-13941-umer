@@ -14,9 +14,16 @@ const signup = async (req, res, next) => {
         const { name, email, password } = req.body;
 
 
-        if (!name || !email || !password) {
+       if (
+            typeof name !== 'string' ||
+            typeof email !== 'string' ||
+            typeof password !== 'string' ||
+            !name ||
+            !email ||
+            !password
+        ) {
             return res.status(400).json({
-                message: 'All fields are required'
+                message: 'All fields are required and must be text'
             });
         }
 
@@ -63,9 +70,14 @@ const login = async (req, res, next) => {
         const { email, password } = req.body;
 
         // Validation
-        if (!email || !password) {
+       if (
+            typeof email !== 'string' ||
+            typeof password !== 'string' ||
+            !email || 
+            !password
+        ) {
             return res.status(400).json({
-                message: 'Email and password are required'
+                message: 'Email and password are required and must be text'
             });
         }
 
