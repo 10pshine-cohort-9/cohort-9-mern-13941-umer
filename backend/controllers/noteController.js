@@ -4,8 +4,9 @@ const logger = pino();
 
 const create = async (req, res, next) => {
     try {
-        const title = req.body.title;
-        const content = req.body.content;
+        const body = req.body ?? {};
+        const title = body.title;
+        const content = body.content;
         const userId = req.user.id;
 
        if (!title || typeof title !== 'string' || title.trim() === '') {
@@ -41,8 +42,9 @@ const getAll = async (req, res, next) => {
 const update = async (req, res, next) => {
     try {
         const noteId = req.params.id;
-        const title = req.body.title;
-        const content = req.body.content;
+        const body = req.body ?? {};
+        const title = body.title;
+        const content = body.content;
         const userId = req.user.id;
 
        if (!title || typeof title !== 'string' || title.trim() === '') {
