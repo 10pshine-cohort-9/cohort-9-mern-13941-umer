@@ -8,8 +8,11 @@ const create = async (req, res, next) => {
         const content = req.body.content;
         const userId = req.user.id;
 
-        if (!title) {
-            return res.status(400).json({ message: 'Title is required' });
+       if (!title || typeof title !== 'string' || title.trim() === '') {
+            return res.status(400).json({ message: 'A valid title is required' });
+        }
+        if (!content || typeof content !== 'string' || content.trim() === '') {
+            return res.status(400).json({ message: 'A valid content is required' });
         }
 
         const newId = await noteModel.addNote(userId, title, content);
@@ -42,8 +45,11 @@ const update = async (req, res, next) => {
         const content = req.body.content;
         const userId = req.user.id;
 
-        if (!title) {
-            return res.status(400).json({ message: 'Title is required' });
+       if (!title || typeof title !== 'string' || title.trim() === '') {
+            return res.status(400).json({ message: 'A valid title is required' });
+        }
+        if (!content || typeof content !== 'string' || content.trim() === '') {
+            return res.status(400).json({ message: 'A valid content is required' });
         }
 
         const updated = await noteModel.editNote(noteId, userId, title, content);
