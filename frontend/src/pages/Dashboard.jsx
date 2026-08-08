@@ -4,13 +4,15 @@ import Navbar from '../components/Navbar'
 
 function Dashboard() {
   const navigate = useNavigate()
+  const token = localStorage.getItem('token')
 
   useEffect(() => {
-    const token = localStorage.getItem('token')
     if (!token) {
-      navigate('/login')
+      navigate('/login', { replace: true })
     }
-  }, [navigate])
+  }, [navigate, token])
+
+  if (!token) return null;
 
 
   

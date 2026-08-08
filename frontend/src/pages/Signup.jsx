@@ -26,7 +26,7 @@ function Signup() {
         navigate('/login')
       }
     } catch (err) {
-      setError(err.response?.data?.message || 'Signup failed. Please try again....')
+      setError(err.response?.data?.message || 'Signup failed. Please try again.')
     }
   }
 
@@ -35,22 +35,22 @@ function Signup() {
       <div className="auth-box">
         <h2>Create Account</h2>
         
-        {error && <div className="error-msg">{error}</div>}
+        {error && <div className="error-msg" role="alert">{error}</div>}
         
         <form onSubmit={handleSignup}>
           <div className="input-group">
-            <label>Full Name</label>
-            <input type="text" value={name} onChange={(e) => setName(e.target.value)} required />
+            <label htmlFor="signup-name">Full Name</label>
+            <input id="signup-name" type="text" autoComplete="name" value={name} onChange={(e) => setName(e.target.value)} required />
           </div>
 
           <div className="input-group">
-            <label>Email Address</label>
-            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+            <label htmlFor="signup-email">Email Address</label>
+            <input id="signup-email" type="email" autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
           </div>
 
           <div className="input-group">
-            <label>Password</label>
-            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+            <label htmlFor="signup-password">Password</label>
+            <input id="signup-password" type="password" autoComplete="new-password" value={password} onChange={(e) => setPassword(e.target.value)} required />
           </div>
 
           <button type="submit" className="auth-btn">Sign Up</button>

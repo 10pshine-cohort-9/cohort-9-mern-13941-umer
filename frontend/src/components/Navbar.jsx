@@ -6,9 +6,9 @@ function Navbar() {
 
   const handleLogout = () => {
     localStorage.removeItem('token')
-    navigate('/login')
+    navigate('/login', { replace: true })
   }
-
+  
   return (
     <nav className="navbar">
       <h2 className="logo">10P Shine Notes Application</h2>
