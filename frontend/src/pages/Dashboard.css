@@ -1,0 +1,54 @@
+.main-dashboard-page {
+  background-color: #f8f9fa;
+  min-height: 100vh;
+}
+
+.dashboard-content {
+  padding: 30px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.top-bar h2 {
+  margin: 0;
+  color: #333;
+}
+
+.btn-add-new {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.notes-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.notes-container > div {
+  width: 31%;
+}
+
+@media (max-width: 800px) {
+  .notes-container > div {
+    width: 48%;
+  }
+}
+
+@media (max-width: 500px) {
+  .notes-container > div {
+    width: 100%;
+  }
+}

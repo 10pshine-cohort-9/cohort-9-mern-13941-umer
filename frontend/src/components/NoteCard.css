@@ -1,0 +1,50 @@
+.single-note-card {
+  background-color: white;
+  border: 1px solid #d3d3d3;
+  border-radius: 5px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.note-card-top {
+  border-bottom: 1px solid #eeeeee;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+
+.note-card-top h3 {
+  margin: 0;
+  color: #333;
+}
+
+.note-card-top small {
+  color: gray;
+}
+
+.note-card-body {
+  height: 100px;
+  overflow: hidden;
+  color: #444;
+}
+
+.note-card-bottom {
+  margin-top: 15px;
+  display: flex;
+  gap: 10px;
+}
+
+.btn-edit {
+  background-color: #ffc107;
+  border: none;
+  padding: 7px 15px;
+  cursor: pointer;
+}
+
+.btn-delete {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 7px 15px;
+  cursor: pointer;
+}
