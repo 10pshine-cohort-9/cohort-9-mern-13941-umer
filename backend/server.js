@@ -1,4 +1,6 @@
 const app = require('./app');
+const http = require('http');
+const { initSocket } = require('./socket');
 const pino = require('pino');
 const initDatabase = require('./config/initDb');
 
@@ -9,7 +11,10 @@ const startServer = async () => {
     try {
         await initDatabase(); 
 
-        app.listen(port, (err) => {
+        const server = http.createServer(app);
+        initSocket(server);
+
+        server.listen(port, (err) => {
             if (err) {
                 logger.error(`Error starting server: ${err.message}`);
                 process.exit(1);
@@ -17,9 +22,7 @@ const startServer = async () => {
             logger.info(`Server is onn and running on port ${port}`);
         });
 
-    } 
-    
-    catch (err) {
+    } catch (err) {
         logger.error(`Failed to start the server due to database error: ${err.message}`);
         process.exit(1); 
     }

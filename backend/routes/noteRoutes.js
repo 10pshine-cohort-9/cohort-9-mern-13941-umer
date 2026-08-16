@@ -1,11 +1,13 @@
 const express = require('express');
-
 const noteController = require('../controllers/noteController');
 const authMiddleware = require('../middlewares/authMiddleware');
 
 const router = express.Router();
 
 router.use(authMiddleware.protect);
+
+router.post('/import', noteController.importNotes);
+router.get('/export', noteController.exportNotes);
 
 router.post('/', noteController.create);
 router.get('/', noteController.getAll);
