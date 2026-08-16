@@ -48,21 +48,31 @@ const removeNote = async (noteId, userId) => {
 };
 
 const bulkAddNotes = async (userId, notesArray) => {
-    try {
-        if (!notesArray || notesArray.length === 0) return 0;
-        
-        let count = 0;
-        for (let i = 0; i < notesArray.length; i++) {
-            const item = notesArray[i];
-            if (item.title && item.content) {
-                const q = 'INSERT INTO notes (user_id, title, content) VALUES (?, ?, ?)';
-                await pool.execute(q, [userId, item.title, item.content]);
-                count++;
-            }
+    if (!Array.isArray(notesArray) || notesArray.length === 0) return 0;
+
+    // Pehle validate karein taakay kharab data DB tak jaye hi na
+    for (const item of notesArray) {
+        if (!item || typeof item !== 'object' || typeof item.title !== 'string' || typeof item.content !== 'string' || item.title.trim() === '' || item.content.trim() === '') {
+            throw new Error('Invalid note data format');
         }
+    }
+
+    const connection = await pool.getConnection(); // Transaction shuru
+    try {
+        await connection.beginTransaction();
+        let count = 0;
+        for (const item of notesArray) {
+            const q = 'INSERT INTO notes (user_id, title, content) VALUES (?, ?, ?)';
+            await connection.execute(q, [userId, item.title, item.content]);
+            count++;
+        }
+        await connection.commit(); 
         return count;
     } catch (err) {
+        await connection.rollback(); 
         throw err;
+    } finally {
+        connection.release();
     }
 };
 

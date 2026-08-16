@@ -35,7 +35,11 @@ const create = async (req, res, next) => {
 const getAll = async (req, res, next) => {
     try {
         const userId = req.user.id;
-        const search = req.query.search || '';
+        const rawSearch = req.query.search;
+        if (rawSearch !== undefined && typeof rawSearch !== 'string') {
+            return res.status(400).json({ message: 'Search query must be a string' });
+        }
+        const search = rawSearch || '';
         const myNotes = await noteModel.getUserNotes(userId, search);
         
         res.status(200).json(myNotes);

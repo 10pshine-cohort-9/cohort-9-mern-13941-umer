@@ -14,11 +14,12 @@ const startServer = async () => {
         const server = http.createServer(app);
         initSocket(server);
 
-        server.listen(port, (err) => {
-            if (err) {
-                logger.error(`Error starting server: ${err.message}`);
-                process.exit(1);
-            }
+        server.on('error', (err) => {
+            logger.error(`Error starting server: ${err.message}`);
+            process.exit(1);
+        });
+
+        server.listen(port, () => {
             logger.info(`Server is onn and running on port ${port}`);
         });
 
