@@ -15,7 +15,11 @@
   background-color: white;
   padding: 30px;
   width: 500px;
+  max-width: 90vw;
+  max-height: 85vh;
+  overflow-y: auto;
   border-radius: 5px;
+  box-sizing: border-box;
 }
 
 .input-box {

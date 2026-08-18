@@ -8,6 +8,7 @@ const errorHandler = require('./middlewares/errorHandler');
 const dbRoutes = require('./routes/dbRoutes');
 const authRoutes = require('./routes/authRoutes');
 const noteRoutes = require('./routes/noteRoutes');
+const userRoutes = require('./routes/userRoutes');
 
 const app = express();
 const logger = pino();
@@ -17,6 +18,7 @@ app.use(express.json());
 app.use('/api/db', dbRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/notes', noteRoutes);
+app.use('/api/users', userRoutes);
 
 app.get('/api/status', (req, res) => {
     logger.info('Status check route accessed');
