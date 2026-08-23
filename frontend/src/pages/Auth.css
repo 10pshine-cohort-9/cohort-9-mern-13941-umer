@@ -2,13 +2,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
+  box-sizing: border-box;
   background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%);
   padding: 20px;
-  overflow: hidden;
+  overflow-y: auto;
 }
 
-@keyframes slideUpFade {
+@keyframes slide-up-fade {
   0% {
     opacity: 0;
     transform: translateY(20px);
@@ -29,7 +30,7 @@
   border-radius: 20px;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
   overflow: hidden;
-  animation: slideUpFade 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: slide-up-fade 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .auth-sidebar {
@@ -193,10 +194,6 @@
 }
 
 @media (max-width: 850px) {
-  .main-auth {
-    height: auto;
-    min-height: 100vh;
-  }
   .auth-box {
     flex-direction: column;
     height: auto;

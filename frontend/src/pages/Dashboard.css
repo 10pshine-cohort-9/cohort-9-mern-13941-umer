@@ -35,7 +35,7 @@
 .search-input-wrapper input {
   width: 100%;
   padding: 16px 20px 16px 55px;
-  border: none;
+  border: 1px solid #cbd5e1;
   border-radius: 12px;
   font-size: 16px;
   outline: none;
@@ -46,6 +46,7 @@
 }
 
 .search-input-wrapper input:focus {
+  border-color: #4f46e5;
   box-shadow: 0 4px 20px rgba(99, 102, 241, 0.15);
 }
 
@@ -77,6 +78,7 @@
   min-height: 200px;
   cursor: pointer;
   transition: all 0.2s;
+  width: 100%;
 }
 
 .add-note-card:hover {
@@ -99,6 +101,7 @@
   color: #64748b;
   font-size: 15px;
   font-weight: 500;
+  margin: 0;
 }
 
 .empty-state-wrapper {
@@ -228,4 +231,14 @@
   padding: 50px;
   color: #94a3b8;
   font-size: 16px;
+}
+
+@media (max-width: 900px) {
+  .dashboard-layout {
+    flex-direction: column;
+  }
+  .main-content {
+    margin-left: 0;
+    padding: 20px;
+  }
 }

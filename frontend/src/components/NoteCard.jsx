@@ -1,4 +1,5 @@
 import DOMPurify from 'dompurify'
+import PropTypes from 'prop-types'
 import './NoteCard.css'
 
 function NoteCard({ note, isPinned, onTogglePin, onEditClick, onDeleteClick }) {
@@ -14,8 +15,11 @@ function NoteCard({ note, isPinned, onTogglePin, onEditClick, onDeleteClick }) {
       <div className="note-card-top">
         <h3>{note.title}</h3>
         <button 
+          type="button"
           className={`pin-btn ${isPinned ? 'active-pin' : ''}`} 
           onClick={onTogglePin} 
+          aria-label={isPinned ? 'Unpin note' : 'Pin note'}
+          aria-pressed={isPinned}
         >
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21.1 4.96a2.08 2.08 0 0 0-2.88 0l-1.92 1.92-5.71-1.39-1.94 1.94 3.75 5.56-6.17 6.17 1.41 1.42 6.17-6.17 5.56 3.75 1.94-1.94-1.39-5.71 1.92-1.92a2.08 2.08 0 0 0 0-2.88z"></path></svg>
         </button>
@@ -29,15 +33,23 @@ function NoteCard({ note, isPinned, onTogglePin, onEditClick, onDeleteClick }) {
       />
 
       <div className="note-card-bottom">
-        <button className="btn-edit" onClick={() => onEditClick(note)}>
+        <button type="button" className="btn-edit" onClick={() => onEditClick(note)}>
           Edit
         </button>
-        <button className="btn-delete" onClick={() => onDeleteClick(note)}>
+        <button type="button" className="btn-delete" onClick={() => onDeleteClick(note)}>
           Delete
         </button>
       </div>
     </div>
   )
+}
+
+NoteCard.propTypes = {
+  note: PropTypes.object.isRequired,
+  isPinned: PropTypes.bool.isRequired,
+  onTogglePin: PropTypes.func.isRequired,
+  onEditClick: PropTypes.func.isRequired,
+  onDeleteClick: PropTypes.func.isRequired
 }
 
 export default NoteCard

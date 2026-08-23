@@ -19,7 +19,14 @@ function Dashboard() {
   const [toastType, setToastType] = useState('success')
   const [searchQuery, setSearchQuery] = useState('')
   const [currentView, setCurrentView] = useState('all') 
-  const [pinnedNotes, setPinnedNotes] = useState(JSON.parse(localStorage.getItem('pinnedNotes')) || [])
+  const [pinnedNotes, setPinnedNotes] = useState(() => {
+    try {
+      const savedPins = JSON.parse(localStorage.getItem('pinnedNotes') || '[]')
+      return Array.isArray(savedPins) ? savedPins : []
+    } catch {
+      return []
+    }
+  })
   const [profileData, setProfileData] = useState(null)
 
   const searchQueryRef = useRef('')
@@ -31,12 +38,33 @@ function Dashboard() {
     searchQueryRef.current = searchQuery
   }, [searchQuery])
 
+  const getAllNotes = (signal) => {
+    setIsLoading(true)
+    axios.get('/api/notes', { 
+      params: { search: searchQuery },
+      headers: { Authorization: `Bearer ${token}` },
+      signal
+    })
+      .then((res) => {
+        setNotesList(res.data)
+        setIsLoading(false)
+      })
+      .catch((err) => {
+        if (err.name === 'CanceledError' || axios.isCancel(err)) return;
+        setToastText('Could not load notes')
+        setToastType('error')
+        setIsLoading(false)
+      })
+  }
+
   useEffect(() => {
     if (!token) {
       navigate('/login')
-    } else {
-      getAllNotes()
+      return
     }
+    const controller = new AbortController()
+    getAllNotes(controller.signal)
+    return () => controller.abort()
   }, [navigate, token, searchQuery])
 
   useEffect(() => {
@@ -69,23 +97,6 @@ function Dashboard() {
       socket.disconnect()
     }
   }, [token])
-
-  const getAllNotes = () => {
-    setIsLoading(true)
-    axios.get('/api/notes', { 
-      params: { search: searchQuery },
-      headers: { Authorization: `Bearer ${token}` } 
-    })
-      .then((res) => {
-        setNotesList(res.data)
-        setIsLoading(false)
-      })
-      .catch(() => {
-        setToastText('Could not load notes')
-        setToastType('error')
-        setIsLoading(false)
-      })
-  }
 
   const togglePin = (id) => {
     const newPins = pinnedNotes.includes(id) 
@@ -287,10 +298,10 @@ function Dashboard() {
               <div className="notes-container">
                 
                 {currentView === 'all' && searchQuery.trim() === '' && notesList.length > 0 && (
-                  <div className="add-note-card" onClick={openNewNoteModal}>
+                  <button type="button" className="add-note-card" onClick={openNewNoteModal}>
                     <div className="add-icon">+</div>
                     <p>Create new note</p>
-                  </div>
+                  </button>
                 )}
 
                 {sortedNotes.length === 0 ? (
@@ -317,7 +328,7 @@ function Dashboard() {
                       </p>
                       
                       {searchQuery.trim() === '' && currentView === 'all' && (
-                        <button className="empty-state-btn" onClick={openNewNoteModal}>
+                        <button type="button" className="empty-state-btn" onClick={openNewNoteModal}>
                           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                           Create First Note
                         </button>
