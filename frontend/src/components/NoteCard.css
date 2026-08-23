@@ -1,50 +1,104 @@
 .single-note-card {
-  background-color: white;
-  border: 1px solid #d3d3d3;
-  border-radius: 5px;
-  padding: 15px;
+  border-radius: 16px;
+  padding: 24px;
   display: flex;
   flex-direction: column;
+  transition: transform 0.2s, box-shadow 0.2s;
+  min-height: 200px;
+}
+
+.single-note-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
 }
 
 .note-card-top {
-  border-bottom: 1px solid #eeeeee;
-  padding-bottom: 10px;
-  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 8px;
 }
 
 .note-card-top h3 {
   margin: 0;
-  color: #333;
+  color: #1e293b;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.3;
+  padding-right: 15px;
 }
 
-.note-card-top small {
-  color: gray;
+.pin-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #94a3b8;
+  transition: color 0.2s;
+  padding: 0;
+}
+
+.pin-btn:hover {
+  color: #1e293b;
+}
+
+.pin-btn.active-pin {
+  color: #1e293b;
+  fill: #1e293b;
+}
+
+.note-date {
+  color: #64748b;
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 15px;
+  display: block;
 }
 
 .note-card-body {
-  height: 100px;
+  height: 90px;
   overflow: hidden;
-  color: #444;
+  color: #334155;
+  font-size: 14.5px;
+  line-height: 1.6;
+  margin-bottom: 20px;
 }
 
 .note-card-bottom {
-  margin-top: 15px;
   display: flex;
   gap: 10px;
+  margin-top: auto;
 }
 
 .btn-edit {
-  background-color: #ffc107;
+  background-color: rgba(255, 255, 255, 0.6);
+  color: #334155;
   border: none;
-  padding: 7px 15px;
+  padding: 8px;
   cursor: pointer;
+  border-radius: 8px;
+  flex: 1;
+  font-weight: 600;
+  font-size: 13px;
+  transition: background-color 0.2s;
+}
+
+.btn-edit:hover {
+  background-color: rgba(255, 255, 255, 0.9);
 }
 
 .btn-delete {
-  background-color: #dc3545;
-  color: white;
+  background-color: rgba(239, 68, 68, 0.1);
+  color: #dc2626;
   border: none;
-  padding: 7px 15px;
+  padding: 8px;
   cursor: pointer;
+  border-radius: 8px;
+  flex: 1;
+  font-weight: 600;
+  font-size: 13px;
+  transition: background-color 0.2s;
+}
+
+.btn-delete:hover {
+  background-color: rgba(239, 68, 68, 0.2);
 }
