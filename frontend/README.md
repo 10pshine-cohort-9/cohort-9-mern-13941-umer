@@ -1,16 +1,38 @@
-# React + Vite
+# Shine Notes App 💡
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Shine Notes is a simple, modern, and fully responsive notes management application built with the MERN stack. It provides a distraction-free workspace for users to capture ideas, manage tasks, and organize their daily thoughts securely.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **User Authentication:** Secure signup and login using JWT.
+- **CRUD Operations:** Create, read, update, and delete notes effortlessly.
+- **Pin Important Notes:** Keep your most important notes at the top for quick access.
+- **Search & Sort:** Easily find specific notes using the search bar and automatic sorting.
+- **Data Portability:** Import and export your notes in JSON format.
+- **Modern UI/UX:** Clean dashboard with a dedicated sidebar and pastel-colored note cards.
 
-## React Compiler
+## Tech Stack Used
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Frontend:** React.js, React Router, Axios, CSS3
+- **Backend:** Node.js, Express.js
+- **Database:** MongoDB
+- **Real-time Updates:** Socket.io
+- **Code Quality:** SonarQube
 
-## Expanding the Oxlint configuration
+## How to Run Locally
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+1. **Clone the repository:**
+   `git clone https://github.com/10pshine-cohort-9/cohort-9-mern-13941-umer.git`
+
+2. **Setup Backend:**
+   - Navigate to the backend folder: `cd backend`
+   - Install dependencies: `npm install`
+   - Create a `.env` file and add your `MONGO_URI` and `JWT_SECRET`.
+   - Start the server: `npm run dev`
+
+3. **Setup Frontend:**
+   - Open a new terminal and navigate to the frontend folder: `cd frontend`
+   - Install dependencies: `npm install`
+   - Start the React app: `npm run dev`
+
+4. Open your browser and go to `http://localhost:5173` to start using the app.
